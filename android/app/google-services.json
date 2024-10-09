@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "192239947282",
+    "project_id": "magic-workout-2024",
+    "storage_bucket": "magic-workout-2024.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192239947282:android:9800f57cb366c1972ad2cb",
+        "android_client_info": {
+          "package_name": "com.coldfrey.workout"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBP6gmb3RBp6ucNdm3DUW9jhAxkovvAavQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
