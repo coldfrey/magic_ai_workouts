@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import '../models/workout_exercise.dart';
 import '../models/workout.dart';
@@ -18,9 +19,7 @@ class WorkoutViewController extends GetxController {
 
   WorkoutViewController({required this.workoutId});
 
-  /// Initialize the controller by subscribing to the workout document
   void subscribeToWorkout(String workoutId) {
-    print('Subscribing to workout: $workoutId');
     _workoutSubscription?.cancel();
     _workoutSubscription = _firestore
         .collection('workouts')
@@ -33,27 +32,25 @@ class WorkoutViewController extends GetxController {
         _workout.value = null;
       }
     }, onError: (e) {
-      print('Error subscribing to workout: $e');
     });
   }
 
-  /// Save the workout to Firestore, either creating a new document or updating an existing one
   Future<void> saveWorkout(Workout workout) async {
     try {
       if (workout.id.isEmpty) {
-        // Create a new workout
         DocumentReference newDoc =
             await _firestore.collection('workouts').add(workout.toJson());
         _workout.value = workout.copyWith(id: newDoc.id);
       } else {
-        // Update existing workout
         await _firestore
             .collection('workouts')
             .doc(workout.id)
             .update(workout.toJson());
       }
     } catch (e) {
-      print('Error saving workout: $e');
+      if (kDebugMode) {
+        print('Error saving workout: $e');
+      }
     }
   }
 
@@ -80,7 +77,6 @@ class WorkoutViewController extends GetxController {
 
   @override
   void onClose() {
-    print('WorkoutViewController for workoutId $workoutId is being closed.');
     _workoutSubscription?.cancel();
     super.onClose();
   }

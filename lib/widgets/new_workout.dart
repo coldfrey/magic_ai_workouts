@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 Future<List<String>?> showWorkoutCreationDialog(BuildContext context) async {
   TextEditingController nameController = TextEditingController();
-  String selectedType = ''; // No default selection
-  bool nameVisible = false; // Controls whether the name input is visible
+  String selectedType = '';
+  bool nameVisible = false; 
 
   final sessionTypes = ['Legs', 'Push', 'Pull'];
 
@@ -26,7 +26,6 @@ Future<List<String>?> showWorkoutCreationDialog(BuildContext context) async {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Session Type Selection Buttons
                   if (!nameVisible)
                     Column(
                       children: sessionTypes.map((type) {
@@ -60,7 +59,6 @@ Future<List<String>?> showWorkoutCreationDialog(BuildContext context) async {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  // Optional: Add an icon for each type
                                   Icon(
                                     type == 'Legs'
                                         ? Icons.directions_walk
@@ -89,7 +87,6 @@ Future<List<String>?> showWorkoutCreationDialog(BuildContext context) async {
                         );
                       }).toList(),
                     ),
-                  // Name Input Field
                   if (nameVisible)
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -113,11 +110,10 @@ Future<List<String>?> showWorkoutCreationDialog(BuildContext context) async {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Cancel Button (visible only when nameVisible is true)
                   if (nameVisible)
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).pop(); // Close the dialog
+                        Navigator.of(context).pop(); 
                       },
                       child: Text(
                         'Cancel',
@@ -127,32 +123,28 @@ Future<List<String>?> showWorkoutCreationDialog(BuildContext context) async {
                       ),
                     )
                   else
-                    const SizedBox(), // Placeholder to keep alignment
-
-                  // Next or Create Button
+                    const SizedBox(),
                   TextButton(
                     onPressed: () {
                       if (!nameVisible) {
                         if (selectedType.isEmpty) {
-                          // Show a message if no session type is selected
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('Please select a session type.'),
                             ),
                           );
                         } else {
-                          // Set default name based on selected session type
                           if (nameController.text.isEmpty) {
                             nameController.text = '$selectedType Session';
                           }
                           setState(() {
-                            nameVisible = true; // Show the name field
+                            nameVisible = true; 
                           });
                         }
                       } else {
                         Navigator.of(context).pop(
                           [nameController.text, selectedType],
-                        ); // Return the name and type
+                        ); 
                       }
                     },
                     child: Text(

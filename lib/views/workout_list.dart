@@ -10,10 +10,10 @@ class WorkoutListView extends StatefulWidget {
   const WorkoutListView({super.key});
 
   @override
-  _WorkoutListViewState createState() => _WorkoutListViewState();
+  WorkoutListViewState createState() => WorkoutListViewState();
 }
 
-class _WorkoutListViewState extends State<WorkoutListView> {
+class WorkoutListViewState extends State<WorkoutListView> {
   final WorkoutListController workoutListController =
       Get.put(WorkoutListController());
 
@@ -28,15 +28,7 @@ class _WorkoutListViewState extends State<WorkoutListView> {
   @override
   void initState() {
     super.initState();
-    // Scroll to the current month after the first frame is rendered
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // double monthWidth = 80.0 + 16.0; // Width + horizontal margin
-      // double scrollTo = (selectedMonth - 1) * monthWidth;
-      // _monthsScrollController.animateTo(
-      //   scrollTo,
-      //   duration: Duration(milliseconds: 1000),
-      //   curve: Curves.easeInOut,
-      // );
       scrollToMonth(selectedMonth);
     });
   }
@@ -210,7 +202,6 @@ class _WorkoutListViewState extends State<WorkoutListView> {
                 itemBuilder: (context, index) {
                   final workout = filteredWorkouts[index];
 
-                  // Check if the current workout is being deleted
                   if (deletingWorkoutIndex == index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -220,8 +211,6 @@ class _WorkoutListViewState extends State<WorkoutListView> {
                           await workoutListController.deleteWorkout(workout.id);
                           setState(() {
                             deletingWorkoutIndex = null;
-                            // Optionally exit delete mode
-                            // showDeleteIcons = false;
                           });
                         },
                       ),
@@ -229,7 +218,8 @@ class _WorkoutListViewState extends State<WorkoutListView> {
                   }
 
                   return Card(
-                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     elevation: 2,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -295,8 +285,7 @@ class _WorkoutListViewState extends State<WorkoutListView> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => WorkoutInput(
-                    workoutId: workoutListController.selectedWorkout.value!
-                        .id, // Pass the selected session type
+                    workoutId: workoutListController.selectedWorkout.value!.id,
                   ),
                 ),
               );

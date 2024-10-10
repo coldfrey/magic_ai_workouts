@@ -10,10 +10,10 @@ class WorkoutInput extends StatefulWidget {
   const WorkoutInput({super.key, required this.workoutId});
 
   @override
-  _WorkoutInputState createState() => _WorkoutInputState();
+  WorkoutInputState createState() => WorkoutInputState();
 }
 
-class _WorkoutInputState extends State<WorkoutInput> {
+class WorkoutInputState extends State<WorkoutInput> {
   late final WorkoutViewController workoutViewController;
   bool isEditingName = false;
   final FocusNode _nameFocusNode = FocusNode();

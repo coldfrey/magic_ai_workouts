@@ -10,7 +10,7 @@ class ExerciseWidget extends StatefulWidget {
   final List<WorkoutExercise> exercises;
   final bool isExpanded;
   final VoidCallback onExpand;
-  final String sessionType; // Add sessionType
+  final String sessionType; 
   final Function(List<WorkoutExercise> exercises) updateWorkoutField;
 
   const ExerciseWidget({
@@ -20,29 +20,28 @@ class ExerciseWidget extends StatefulWidget {
     required this.exercises,
     required this.isExpanded,
     required this.onExpand,
-    required this.sessionType, // Initialize sessionType
+    required this.sessionType, 
     required this.updateWorkoutField,
   });
 
   @override
-  _ExerciseWidgetState createState() => _ExerciseWidgetState();
+  ExerciseWidgetState createState() => ExerciseWidgetState();
 }
 
-class _ExerciseWidgetState extends State<ExerciseWidget> {
+class ExerciseWidgetState extends State<ExerciseWidget> {
   bool isEditing = false;
   bool showConfirmDelete = false;
-  late Exercise selectedExercise; // The selected exercise for this widget
+  late Exercise selectedExercise; 
 
   @override
   void initState() {
     super.initState();
-    // Set default exercise based on session type if not already selected
     if (widget.exercise.exercise == null) {
       selectedExercise = _getFilteredExercises()
-          .first; // Set first exercise from filtered list as default
+          .first; 
     } else {
       selectedExercise =
-          widget.exercise.exercise!; // Use the pre-selected exercise
+          widget.exercise.exercise!; 
     }
   }
 
@@ -97,11 +96,11 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                         child: DropdownButton<Exercise>(
                           value: exercise.exercise,
                           isExpanded:
-                              true, // Makes sure the dropdown takes full width
+                              true,
                           icon: const Icon(Icons.arrow_drop_down,
                               color:
-                                  Colors.black), // Change dropdown arrow color
-                          iconSize: 30, // Adjust the size of the dropdown arrow
+                                  Colors.black),
+                          iconSize: 30, 
                           onChanged: (Exercise? newValue) {
                             if (newValue != null) {
                               widget.exercises[exerciseIndex] =
@@ -117,17 +116,17 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                               child: Text(
                                 value.toString(),
                                 style: const TextStyle(
-                                  fontSize: 16, // Adjust font size
-                                  color: Colors.black, // Text color
+                                  fontSize: 16, 
+                                  color: Colors.black, 
                                 ),
                               ),
                             );
                           }).toList(),
                           dropdownColor: Colors
-                              .white, // Background color of the dropdown list
+                              .white, 
                           style: const TextStyle(
                             fontSize: 16,
-                            color: Colors.black, // Text color inside dropdown
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -158,9 +157,9 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                         },
                       ),
                       IconButton(
-                        icon: const Icon(Icons.expand_less), // Collapse icon
+                        icon: const Icon(Icons.expand_less),
                         onPressed: () {
-                          widget.onExpand(); // Toggle expansion
+                          widget.onExpand();
                         },
                       ),
                     ],
@@ -188,7 +187,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
         widget.updateWorkoutField(widget.exercises);
         setState(() {
           showConfirmDelete =
-              false; // Reset the confirmation state after deletion
+              false; 
         });
       },
     );
@@ -278,7 +277,6 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
   }
 
   List<Exercise> _getFilteredExercises() {
-    // Get filtered exercises based on session type
     List<Exercise> filteredExercises = Exercise.values
         .where((exercise) => exercise.category
             .toString()
@@ -286,7 +284,6 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
             .contains(widget.sessionType.toLowerCase()))
         .toList();
 
-    // Ensure the current exercise is in the list
     if (widget.exercise.exercise != null &&
         !filteredExercises.contains(widget.exercise.exercise)) {
       filteredExercises.add(widget.exercise.exercise!);

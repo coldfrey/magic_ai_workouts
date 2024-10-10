@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import '../models/workout.dart';
 import 'dart:async';
@@ -43,7 +44,9 @@ class WorkoutListController extends GetxController {
         _workouts.refresh();
       });
     } catch (e) {
-      print('Error subscribing to workouts collection: $e');
+      if (kDebugMode) {
+        print('Error subscribing to workouts collection: $e');
+      }
     }
   }
 
@@ -52,7 +55,9 @@ class WorkoutListController extends GetxController {
     try {
       await _firestore.collection('workouts').doc(workoutId).delete();
     } catch (e) {
-      print('Error deleting workout: $e');
+      if (kDebugMode) {
+        print('Error deleting workout: $e');
+      }
     }
   }
 
@@ -72,7 +77,9 @@ class WorkoutListController extends GetxController {
       await Future.delayed(const Duration(milliseconds: 500));
       selectedWorkout.value = _workouts[docRef.id];
     } catch (e) {
-      print('Error creating new workout: $e');
+      if (kDebugMode) {
+        print('Error creating new workout: $e');
+      }
     }
   }
 
