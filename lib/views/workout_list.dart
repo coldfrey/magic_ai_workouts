@@ -46,7 +46,7 @@ class _WorkoutListViewState extends State<WorkoutListView> {
     double scrollTo = (month - 1) * monthWidth;
     _monthsScrollController.animateTo(
       scrollTo,
-      duration: Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 1000),
       curve: Curves.easeInOut,
     );
   }
@@ -93,7 +93,7 @@ class _WorkoutListViewState extends State<WorkoutListView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'All Workouts',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
@@ -133,7 +133,7 @@ class _WorkoutListViewState extends State<WorkoutListView> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           // Year Dropdown
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -153,9 +153,9 @@ class _WorkoutListViewState extends State<WorkoutListView> {
               }).toList(),
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           // Months Carousel
-          Container(
+          SizedBox(
             height: 60,
             child: ListView.builder(
               controller: _monthsScrollController,
@@ -173,7 +173,7 @@ class _WorkoutListViewState extends State<WorkoutListView> {
                   child: Container(
                     width: 80,
                     alignment: Alignment.center,
-                    margin: EdgeInsets.symmetric(horizontal: 8),
+                    margin: const EdgeInsets.symmetric(horizontal: 8),
                     decoration: BoxDecoration(
                       color: isSelected ? Colors.blue : Colors.grey[300],
                       borderRadius: BorderRadius.circular(8),
@@ -190,7 +190,7 @@ class _WorkoutListViewState extends State<WorkoutListView> {
               },
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           // Workouts List
           Expanded(
             child: Obx(() {
@@ -201,7 +201,7 @@ class _WorkoutListViewState extends State<WorkoutListView> {
                   .toList();
 
               if (filteredWorkouts.isEmpty) {
-                return Center(
+                return const Center(
                     child: Text('No workouts recorded for this month.'));
               }
 
@@ -229,7 +229,7 @@ class _WorkoutListViewState extends State<WorkoutListView> {
                   }
 
                   return Card(
-                    margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     elevation: 2,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -237,7 +237,7 @@ class _WorkoutListViewState extends State<WorkoutListView> {
                     child: ListTile(
                       title: Text(
                         workout.name,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text('${workout.exercises.length} Exercises'),
                       trailing: showDeleteIcons

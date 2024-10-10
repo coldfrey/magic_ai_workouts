@@ -7,7 +7,7 @@ import '../models/workout_exercise.dart';
 class WorkoutInput extends StatefulWidget {
   final String workoutId;
 
-  const WorkoutInput({Key? key, required this.workoutId}) : super(key: key);
+  const WorkoutInput({super.key, required this.workoutId});
 
   @override
   _WorkoutInputState createState() => _WorkoutInputState();
@@ -123,7 +123,11 @@ class _WorkoutInputState extends State<WorkoutInput> {
                 return ExerciseWidget(
                   exerciseIndex: exerciseIndex,
                   exercise: exercise,
-                  workoutViewController: workoutViewController,
+                  // workoutViewController: workoutViewController,
+                  updateWorkoutField: (List<WorkoutExercise> exercises) {
+                    workoutViewController.updateWorkoutField(
+                        exercises: exercises);
+                  },
                   exercises: workout.exercises,
                   isExpanded: isExpanded,
                   sessionType: workout.sessionType,
@@ -139,7 +143,7 @@ class _WorkoutInputState extends State<WorkoutInput> {
                     });
                   },
                 );
-              }).toList(),
+              }),
             ],
           ),
         );

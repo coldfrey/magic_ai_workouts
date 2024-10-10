@@ -47,7 +47,7 @@ Future<List<String>?> showWorkoutCreationDialog(BuildContext context) async {
                                 borderRadius: BorderRadius.circular(12),
                                 boxShadow: isSelected
                                     ? [
-                                        BoxShadow(
+                                        const BoxShadow(
                                           color: Colors.black26,
                                           blurRadius: 4,
                                           offset: Offset(0, 2),
@@ -55,7 +55,7 @@ Future<List<String>?> showWorkoutCreationDialog(BuildContext context) async {
                                       ]
                                     : [],
                               ),
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   vertical: 16, horizontal: 24),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -71,7 +71,7 @@ Future<List<String>?> showWorkoutCreationDialog(BuildContext context) async {
                                         ? Colors.white
                                         : Colors.black54,
                                   ),
-                                  SizedBox(width: 10),
+                                  const SizedBox(width: 10),
                                   Text(
                                     type,
                                     style: TextStyle(
@@ -95,20 +95,20 @@ Future<List<String>?> showWorkoutCreationDialog(BuildContext context) async {
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: TextField(
                         controller: nameController,
-                        style: TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 16),
                         decoration: InputDecoration(
                           labelText: 'Workout Name',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          prefixIcon: Icon(Icons.edit),
+                          prefixIcon: const Icon(Icons.edit),
                         ),
                       ),
                     ),
                 ],
               ),
             ),
-            actionsPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            actionsPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             actions: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,7 +127,7 @@ Future<List<String>?> showWorkoutCreationDialog(BuildContext context) async {
                       ),
                     )
                   else
-                    SizedBox(), // Placeholder to keep alignment
+                    const SizedBox(), // Placeholder to keep alignment
 
                   // Next or Create Button
                   TextButton(
@@ -136,7 +136,7 @@ Future<List<String>?> showWorkoutCreationDialog(BuildContext context) async {
                         if (selectedType.isEmpty) {
                           // Show a message if no session type is selected
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
+                            const SnackBar(
                               content: Text('Please select a session type.'),
                             ),
                           );

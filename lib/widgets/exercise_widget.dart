@@ -2,28 +2,27 @@ import 'package:flutter/material.dart';
 import '../models/workout_exercise.dart';
 import '../models/exercise.dart';
 import '../models/set.dart';
-import '../controllers/workout_input_controller.dart';
 import 'slide_to_confirm.dart';
 
 class ExerciseWidget extends StatefulWidget {
   final int exerciseIndex;
   final WorkoutExercise exercise;
-  final WorkoutViewController workoutViewController;
   final List<WorkoutExercise> exercises;
   final bool isExpanded;
   final VoidCallback onExpand;
   final String sessionType; // Add sessionType
+  final Function(List<WorkoutExercise> exercises) updateWorkoutField;
 
   const ExerciseWidget({
-    Key? key,
+    super.key,
     required this.exerciseIndex,
     required this.exercise,
-    required this.workoutViewController,
     required this.exercises,
     required this.isExpanded,
     required this.onExpand,
     required this.sessionType, // Initialize sessionType
-  }) : super(key: key);
+    required this.updateWorkoutField,
+  });
 
   @override
   _ExerciseWidgetState createState() => _ExerciseWidgetState();
@@ -51,7 +50,6 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
   Widget build(BuildContext context) {
     final exercise = widget.exercise;
     final exerciseIndex = widget.exerciseIndex;
-    final workoutViewController = widget.workoutViewController;
 
     if (!widget.isExpanded) {
       // Summary View
@@ -87,7 +85,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                       border: InputBorder.none,
                     ),
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.0),
                         border: Border.all(
@@ -100,7 +98,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                           value: exercise.exercise,
                           isExpanded:
                               true, // Makes sure the dropdown takes full width
-                          icon: Icon(Icons.arrow_drop_down,
+                          icon: const Icon(Icons.arrow_drop_down,
                               color:
                                   Colors.black), // Change dropdown arrow color
                           iconSize: 30, // Adjust the size of the dropdown arrow
@@ -108,8 +106,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                             if (newValue != null) {
                               widget.exercises[exerciseIndex] =
                                   exercise.copyWith(exercise: newValue);
-                              workoutViewController.updateWorkoutField(
-                                  exercises: widget.exercises);
+                              widget.updateWorkoutField(widget.exercises);
                             }
                           },
                           items: _getFilteredExercises()
@@ -119,7 +116,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                               value: value,
                               child: Text(
                                 value.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 16, // Adjust font size
                                   color: Colors.black, // Text color
                                 ),
@@ -128,7 +125,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                           }).toList(),
                           dropdownColor: Colors
                               .white, // Background color of the dropdown list
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             color: Colors.black, // Text color inside dropdown
                           ),
@@ -154,8 +151,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                           setState(() {
                             if (isEditing && exercise.sets.isEmpty) {
                               widget.exercises.removeAt(exerciseIndex);
-                              workoutViewController.updateWorkoutField(
-                                  exercises: widget.exercises);
+                              widget.updateWorkoutField(widget.exercises);
                             }
                             isEditing = !isEditing;
                           });
@@ -170,8 +166,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                     ],
                   ),
                 ),
-          if (!showConfirmDelete)
-            _buildSetsList(exercise, workoutViewController),
+          if (!showConfirmDelete) _buildSetsList(exercise),
           _buildAddSetButton(context, exercise),
         ],
       ),
@@ -190,8 +185,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
       message: "Slide to Confirm Deletion",
       onConfirmed: () {
         widget.exercises.removeAt(widget.exerciseIndex);
-        widget.workoutViewController
-            .updateWorkoutField(exercises: widget.exercises);
+        widget.updateWorkoutField(widget.exercises);
         setState(() {
           showConfirmDelete =
               false; // Reset the confirmation state after deletion
@@ -200,8 +194,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
     );
   }
 
-  Widget _buildSetsList(
-      WorkoutExercise exercise, WorkoutViewController workoutViewController) {
+  Widget _buildSetsList(WorkoutExercise exercise) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: exercise.sets.asMap().entries.map((setEntry) {
@@ -218,8 +211,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                   onChanged: (value) {
                     double weight = double.tryParse(value) ?? 0.0;
                     exercise.sets[setIndex] = set.copyWith(weight: weight);
-                    workoutViewController.updateWorkoutField(
-                        exercises: widget.exercises);
+                    widget.updateWorkoutField(widget.exercises);
                   },
                 ),
               ),
@@ -233,8 +225,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                     int repetitions = int.tryParse(value) ?? 0;
                     exercise.sets[setIndex] =
                         set.copyWith(repetitions: repetitions);
-                    workoutViewController.updateWorkoutField(
-                        exercises: widget.exercises);
+                    widget.updateWorkoutField(widget.exercises);
                   },
                 ),
               ),
@@ -244,8 +235,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
                   onPressed: () {
                     setState(() {
                       exercise.sets.removeAt(setIndex);
-                      workoutViewController.updateWorkoutField(
-                          exercises: widget.exercises);
+                      widget.updateWorkoutField(widget.exercises);
                     });
                   },
                 ),
@@ -265,8 +255,7 @@ class _ExerciseWidgetState extends State<ExerciseWidget> {
           child: InkWell(
             onTap: () {
               exercise.sets.add(Set(weight: 0.0, repetitions: 0));
-              widget.workoutViewController
-                  .updateWorkoutField(exercises: widget.exercises);
+              widget.updateWorkoutField(widget.exercises);
             },
             child: SizedBox(
               height: 60,
