@@ -29,7 +29,7 @@ Login and setup a new firebase project using the Firebase CLI
 firebase login
 flutterfire configure
 ```
-Create a data a firebase Firestore database.
+Create a firebase Firestore database, and ensure you have a firebase_options.dart within /lib
 
 
 ## License
